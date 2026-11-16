@@ -1,0 +1,37 @@
+:root{--verde:#1b998b;--escuro:#14655c;--laranja:#ff9f1c;--vermelho:#e5565b;
+--fundo:#e6f6f3;--superficie:#fff;--texto:#2b3a3a;--titulo:#14655c;--borda:#b9d8d3;--linha:#f7fcfb;--linha-borda:#e3eeec;
+--entrada:#fff;--ok-bg:#d8f3dc;--err-bg:#ffe0e0;--sombra:#0001;--suave:#667;color-scheme:light}
+:root[data-tema="escuro"]{--fundo:#0f1f1d;--superficie:#182b28;--texto:#e2f0ed;--titulo:#7fd8cb;--borda:#2f4d48;--linha:#1d3430;--linha-borda:#2a4540;
+--entrada:#0f1f1d;--ok-bg:#1c3b2a;--err-bg:#432225;--sombra:#0006;--suave:#9bb5b0;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;color:var(--texto);background:var(--fundo);transition:background .2s,color .2s}
+header{background:linear-gradient(135deg,var(--verde),var(--escuro));color:#fff;padding:18px 24px;display:flex;align-items:center;gap:12px}
+header .logo{font-size:2rem}header h1{margin:0;font-size:1.35rem}header small{opacity:.85;display:block}
+.btn-tema{margin-left:auto;background:#ffffff2e;border:1px solid #ffffff66;color:#fff;border-radius:20px;padding:7px 14px}
+.btn-tema:hover{background:#ffffff4d}
+nav{background:var(--superficie);box-shadow:0 2px 6px var(--sombra);padding:10px 24px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+nav a{color:var(--titulo);text-decoration:none;padding:7px 14px;border-radius:20px;font-weight:600}
+nav a:hover{background:var(--fundo)}nav .sp{margin-left:auto;color:var(--suave)}
+nav a.sair{background:var(--laranja);color:#fff}
+main{max-width:980px;margin:24px auto;padding:0 14px}
+.card{background:var(--superficie);border-radius:16px;padding:22px;box-shadow:0 4px 14px var(--sombra);margin-bottom:18px;border-top:5px solid var(--verde);overflow-x:auto}
+h2{margin-top:0;color:var(--titulo)}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th{background:var(--verde);color:#fff;text-align:left;padding:10px}
+td{padding:9px 10px;border-bottom:1px solid var(--linha-borda)}tr:nth-child(even) td{background:var(--linha)}
+input,select{padding:8px 10px;margin:3px;border:1px solid var(--borda);border-radius:8px;font-size:.95rem;background:var(--entrada);color:var(--texto)}
+input:focus,select:focus{outline:2px solid var(--verde);border-color:var(--verde)}
+button{padding:8px 16px;border:0;border-radius:8px;background:var(--verde);color:#fff;font-weight:600;cursor:pointer}
+button:hover{background:var(--escuro)}
+form[action$="/excluir"] button{background:var(--vermelho)}
+table a,fieldset+form a,form a{color:var(--titulo);font-weight:600;margin-right:6px}
+fieldset{border:2px dashed var(--borda);border-radius:12px;margin:12px 0;padding:12px}
+legend{color:var(--titulo);font-weight:700;padding:0 8px}
+.msg,.err{padding:10px 14px;border-radius:10px;margin:10px 0}
+.msg{background:var(--ok-bg);border-left:5px solid #2d9d5c}.err{background:var(--err-bg);border-left:5px solid var(--vermelho)}
+form.i{display:inline}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.grid a{background:var(--fundo);border-radius:14px;padding:22px;text-align:center;text-decoration:none;color:var(--titulo);font-weight:700;border:2px solid transparent}
+.grid a:hover{border-color:var(--verde);background:var(--superficie)}.grid span{font-size:2.4rem;display:block}
+.login{max-width:380px;margin:40px auto;text-align:center}.login input{width:100%;margin:6px 0}.login button{width:100%;margin-top:8px}
+.paws{font-size:3rem}

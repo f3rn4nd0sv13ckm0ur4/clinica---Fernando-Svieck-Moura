@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="card">
+  <h2>Bem-vindo(a), {{ session.nome }}! 🐾</h2>
+  <p>O que deseja fazer hoje?</p>
+  <div class="grid">
+    <a href="/tutores"><span>👤</span>Tutores</a>
+    <a href="/pets"><span>🐶</span>Pets</a>
+    <a href="/agendamentos"><span>📅</span>Agendamentos</a>
+    <a href="/logout"><span>🚪</span>Sair</a>
+  </div>
+</div>
+{% endblock %}

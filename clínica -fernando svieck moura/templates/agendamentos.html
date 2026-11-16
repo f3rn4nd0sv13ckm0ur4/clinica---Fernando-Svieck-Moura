@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="card">
+  <h2>Agendamentos</h2>
+  <fieldset><legend>Novo agendamento</legend>
+    <form method="post">
+      <select name="pet_id" required>
+        {% for p in pets %}<option value="{{ p.id }}">{{ p.nome }} (tutor: {{ p.tutor }})</option>{% endfor %}
+      </select>
+      <input type="datetime-local" name="data" required>
+      <input name="descricao" placeholder="Descrição">
+      <button>Agendar</button>
+    </form>
+  </fieldset>
+  <table>
+    <tr><th>Data</th><th>Pet</th><th>Tutor</th><th>Telefone</th><th>Descrição</th><th>Ações</th></tr>
+    {% for a in ags %}
+    <tr>
+      <td>
+        <form class="i" method="post" action="/agendamentos/{{ a.id }}/editar">
+          <input type="datetime-local" name="data" value="{{ a.data }}" required><button>Salvar</button>
+        </form>
+      </td>
+      <td>{{ a.pet }}</td><td>{{ a.tutor }}</td><td>{{ a.telefone }}</td><td>{{ a.descricao }}</td>
+      <td><form class="i" method="post" action="/agendamentos/{{ a.id }}/excluir"><button>Excluir</button></form></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">Nenhum agendamento.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

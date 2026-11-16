@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="card">
+  <h2>Editar tutor</h2>
+  <form method="post">
+    <p><input name="nome" value="{{ t.nome }}" required></p>
+    <p><input name="cpf" value="{{ cpf }}" required></p>
+    <p><input name="telefone" value="{{ t.telefone or '' }}"></p>
+    <button>Salvar</button> <a href="/tutores">Voltar</a>
+  </form>
+</div>
+{% endblock %}

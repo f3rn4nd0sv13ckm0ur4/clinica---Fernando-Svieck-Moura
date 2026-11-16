@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="card">
+  <h2>Pets</h2>
+  <fieldset><legend>Novo pet</legend>
+    <form method="post">
+      <input name="nome" placeholder="Nome" required>
+      <input name="especie" placeholder="Espécie">
+      <select name="tutor_id" required>
+        {% for t in tutores %}<option value="{{ t.id }}">{{ t.nome }}</option>{% endfor %}
+      </select>
+      <button>Cadastrar</button>
+    </form>
+  </fieldset>
+  <table>
+    <tr><th>Pet</th><th>Espécie</th><th>Tutor</th><th></th></tr>
+    {% for p in pets %}
+    <tr>
+      <td>{{ p.nome }}</td><td>{{ p.especie }}</td><td>{{ p.tutor }}</td>
+      <td><form class="i" method="post" action="/pets/{{ p.id }}/excluir"><button>Excluir</button></form></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

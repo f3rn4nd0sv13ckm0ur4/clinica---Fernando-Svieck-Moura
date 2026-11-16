@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Clínica Veterinária Patinhas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='tema.js') }}"></script>
+</head>
+<body>
+<header>
+  <span class="logo">🐾</span>
+  <div><h1>Clínica Veterinária Patinhas</h1><small>Cuidando de quem você ama</small></div>
+  <button type="button" id="btn-tema" class="btn-tema">🌙 Modo escuro</button>
+</header>
+{% if session.nome %}
+<nav>
+  <a href="/">🏠 Início</a><a href="/tutores">👤 Tutores</a><a href="/pets">🐶 Pets</a><a href="/agendamentos">📅 Agendamentos</a>
+  <span class="sp">Olá, {{ session.nome }}</span><a class="sair" href="/logout">Sair</a>
+</nav>
+{% endif %}
+<main>
+  {% for c, m in get_flashed_messages(with_categories=true) %}<div class="{{ c }}">{{ m }}</div>{% endfor %}
+  {% block conteudo %}{% endblock %}
+</main>
+</body>
+</html>

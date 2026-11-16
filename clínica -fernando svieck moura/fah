@@ -1,0 +1,52 @@
+# ---------- tutores ----------
+def valida_cpf(c):
+    return bool(re.fullmatch(r"\d{11}", c)) and len(set(c)) > 1
+
+@app.route("/tutores", methods=["GET", "POST"])
+@login_required
+def tutores():
+    con = db()
+    if request.method == "POST":
+        nome, tel = request.form["nome"].strip(), request.form["telefone"].strip()
+        cpf = re.sub(r"\D", "", request.form["cpf"])
+        if not nome or not valida_cpf(cpf):
+            flash("Informe nome e um CPF válido (11 números).", "err")
+            return redirect("/tutores")
+        if any(dec(r["cpf"]) == cpf for r in con.execute("SELECT cpf FROM tutores")):
+            flash("CPF já cadastrado.", "err")
+            return redirect("/tutores")
+        con.execute("INSERT INTO tutores(nome,cpf,telefone) VALUES(?,?,?)", (nome, enc(cpf), tel)); con.commit()
+        flash("Tutor cadastrado com sucesso!", "msg")
+        return redirect("/tutores?q=" + cpf)  # mostra a listagem filtrada pelo termo inserido
+    q = request.args.get("q", "").strip().lower()
+    lista = []
+    for r in con.execute("SELECT * FROM tutores ORDER BY nome"):
+        cpf = dec(r["cpf"])
+        if not q or q in r["nome"].lower() or q in cpf or q in (r["telefone"] or ""):
+            lista.append({"id": r["id"], "nome": r["nome"], "cpf": cpf, "telefone": r["telefone"]})
+    return render_template("tutores.html", lista=lista, q=request.args.get("q", ""))
+
+@app.route("/tutores/<int:i>/editar", methods=["GET", "POST"])
+@login_required
+def editar_tutor(i):
+    con = db()
+    t = con.execute("SELECT * FROM tutores WHERE id=?", (i,)).fetchone()
+    if not t: return redirect("/tutores")
+    if request.method == "POST":
+        cpf = re.sub(r"\D", "", request.form["cpf"])
+        if not request.form["nome"].strip() or not valida_cpf(cpf):
+            flash("Informe nome e um CPF válido.", "err"); return redirect(f"/tutores/{i}/editar")
+        if any(dec(r["cpf"]) == cpf for r in con.execute("SELECT cpf FROM tutores WHERE id<>?", (i,))):
+            flash("CPF já cadastrado em outro tutor.", "err"); return redirect(f"/tutores/{i}/editar")
+        con.execute("UPDATE tutores SET nome=?,cpf=?,telefone=? WHERE id=?",
+                    (request.form["nome"].strip(), enc(cpf), request.form["telefone"].strip(), i)); con.commit()
+        flash("Tutor atualizado com sucesso!", "msg")
+        return redirect("/tutores?q=" + cpf)
+    return render_template("editar_tutor.html",
+                t=t, cpf=dec(t["cpf"]))
+
+@app.route("/tutores/<int:i>/excluir", methods=["POST"])
+@login_required
+def excluir_tutor(i):
+    db().execute("DELETE FROM tutores WHERE id=?", (i,)); db().commit()
+    flash("Tutor excluído.", "msg"); return redirect("/tutores")

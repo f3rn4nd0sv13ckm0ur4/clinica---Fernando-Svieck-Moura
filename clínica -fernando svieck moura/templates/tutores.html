@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="card">
+  <h2>Tutores</h2>
+  <form method="get">
+    <input name="q" value="{{ q }}" placeholder="Buscar por nome, CPF ou telefone">
+    <button>Buscar</button> <a href="/tutores">Limpar</a>
+  </form>
+  <fieldset><legend>Novo tutor</legend>
+    <form method="post">
+      <input name="nome" placeholder="Nome" required>
+      <input name="cpf" placeholder="CPF (só números)" required>
+      <input name="telefone" placeholder="Telefone">
+      <button>Cadastrar</button>
+    </form>
+  </fieldset>
+  <table>
+    <tr><th>Nome</th><th>CPF</th><th>Telefone</th><th>Ações</th></tr>
+    {% for t in lista %}
+    <tr>
+      <td>{{ t.nome }}</td><td>{{ t.cpf }}</td><td>{{ t.telefone }}</td>
+      <td>
+        <a href="/tutores/{{ t.id }}/editar">Editar</a>
+        <form class="i" method="post" action="/tutores/{{ t.id }}/excluir" onsubmit="return confirm('Excluir tutor e seus pets/agendamentos?')"><button>Excluir</button></form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4">Nenhum registro.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
